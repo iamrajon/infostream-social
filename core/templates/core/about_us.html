@@ -1,0 +1,33 @@
+{% extends 'core/base2.html' %}
+{% load static %}
+
+{% block title %} About_Us Page | Infostream {% endblock title %} 
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card mt-5 border-secondary">
+                <div class="card-header text-center text-secondary fw-bolder">
+                  About Developer of Infostream
+                </div>
+                <div class="card-body">
+                    <div class="details d-flex flex-column align-items-center justify-content-evenly">
+                        <img src="{% static 'images/rajon.jpg' %}" alt="" class="img-fluid rounded-circle" style="width:150px; height:150px; object-fit:cover;">
+                        <div class="description text-center  mt-4">
+                            <p>I'm Rajan Chaudhary, a dedicated computer science student with a knack for full-stack Python development and a flair for frontend technologies. Proficient in Django, Django REST framework, HTML, CSS, and JavaScript, I craft dynamic web and mobile applications. I also venture into creating engaging user interfaces using React JS and delve into Android app development.
+                            </p>
+                        </div>
+                    </div>
+                    <p class="text-center fw-bolder">Back to <a href="{% url 'index' %}">Home</a></p>                   
+                </div>
+              </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
+

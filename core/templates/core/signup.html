@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %} 
+{% load static %}
+{% block title %} Signup Page | Infostream {%endblock title %} 
+
+{% block navbar %}
+<!--navbar not required here-->
+{% endblock navbar %}
+
+
+
+{% block content %}
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 offset-md-3 p-2">
+      <h3 class="text-center my-3 mb-3">Sign Up</h3>
+      <div class="container">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}    
+      </div>
+      <div class="container-fluid">
+        <form
+          action="{% url 'sign-up' %}"
+          method="post"
+          id="signin-form"
+          style="margin-bottom: 5vh"
+          enctype="multipart/form-data"
+          novalidate
+        >
+          {% csrf_token %} {% if form %} {% for fm in form %}
+          <div class="form-group row" style="margin-bottom: 3vh">
+            {{ fm.label_tag }} {{ fm }}
+            <div style="color: red">{{ fm.errors | striptags }}</div>
+          </div>
+          {% endfor %} {% endif %}
+          <div class="row">
+            <div class="col-md-12">
+              <input
+                type="submit"
+                value="Sign Up"
+                class="btn btn-primary"
+                style="margin-top: 12px; width: 100%"
+              />
+            </div>
+          </div>
+        </form>       
+      </div>
+      <div class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+          <p fs-5 fw-400 text-dark>Already have an account?
+            <a href="{% url 'log-in' %}" style="text-decoration:none;">login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

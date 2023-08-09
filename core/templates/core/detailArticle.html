@@ -1,0 +1,29 @@
+{% extends 'core/base2.html' %}
+{% load static %}
+
+{% block title %} Detail-view-of-article | Infostream {% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <!--Navbar-->
+            <nav class="navbar navbar-light bg-light border-bottom">
+                <div class="container">
+                  <a class="navbar-brand" href="{% url 'articles' %}">
+                    <i class="fa-solid fa-left-long"></i><span class="fw-bold">BACK</span>
+                    {% comment %} <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"> {% endcomment %}
+                  </a>
+                </div>
+              </nav>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-8 offset-md-1 p-md-2 ">
+            {{current_article.content | safe }}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

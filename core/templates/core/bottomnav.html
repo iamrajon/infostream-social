@@ -1,0 +1,32 @@
+
+<nav class="xs-nav fixed-bottom d-sm-none mt-3" style="background-color: #f2f2f2;">
+    <div class="container-fluid">
+        <div class="row h-50 justify-content-between ">
+            <div class="col-2 text-center">
+              <a href="{% url 'index' %}" class="text-dark">
+                <span><i class="fa-solid fa-house fs-4 mt-2 py-2"></i></span>
+              </a>
+            </div>
+            <div class="col-2 text-center ">
+              <a href="{% url 'search' %}" class="text-dark">
+                <span><i class="fa-solid fa-magnifying-glass fs-3 mt-2 py-2 "></i></span>
+              </a>
+            </div>
+            <div class="col-2 text-center ">
+              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                <i class="fa-regular fa-square-plus fs-2 py-1"></i>
+              </button>
+            </div>
+            <div class="col-2 text-center">
+              <a href="{% url 'chat-user' %}" class="text-dark">
+                <span><i class="fa-solid fa-message fs-4 mt-2 py-2"></i></i></span>
+              </a>
+            </div>
+            <div class="col-2 text-center ">
+              <a href="{% url 'profile' %}" class="text-dark">
+                <span><i class="fa-solid fa-user fs-4 mt-2 py-2"></i></span>
+              </a>
+            </div>
+        </div>
+    </div>
+</nav>

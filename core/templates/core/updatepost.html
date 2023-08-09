@@ -1,0 +1,40 @@
+{% extends 'core/index.html' %}
+{% load static %}
+
+{% block title %} Update Post | InfoStream  {% endblock title %}  
+
+{% block main %}
+<div class="col-12 col-sm-10 col-md-9 col-lg-6 main_bar border">
+    <div class="container-fluid">
+        <div class="row border-bottom feed_header">
+            <div class="d-flex justify-content-between">
+                <h5 class="p-1">
+                    <a href="{% url 'profile' %}" class="text-dark">
+                        <i class="fa-solid fa-chevron-left me-2 d-md-none"></i>
+                    </a>
+                    Update Post
+                </h5>
+            </div>
+        </div>
+        <div class="row my-3">
+            <h5 class="bg-secondary text-light fw-800 p-1 mt-3 text-center">Edit Post Details</h5>
+            <div class="card bg-light">
+                <div class="card-body">
+                    <form action="#" method="post" novalidate enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form %}
+                          <div class="mb-3">
+                            {{field.label_tag}}  {{ field }}
+                          </div>
+                        {% endfor %} 
+                        <div class="bg-dark my-4 border-bottom"></div>
+                        <button type="submit" class="btn btn-primary ">Update</button>
+                    </form>                 
+                </div>
+            </div>           
+        </div>
+    </div>
+</div>
+
+{% endblock main %}
+

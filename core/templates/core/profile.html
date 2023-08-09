@@ -1,0 +1,277 @@
+{% extends 'core/index.html' %}
+{% load static %}
+
+{% block title %} InfoStream | ProfilePage {% endblock title %}  
+
+{% block main %}
+
+<!--Nav-->
+{% include "core/bottomnav.html" %}
+
+    <div class="col-sm-12 col-md-9 col-lg-6 main_bar border-end">
+        <div class="row border-bottom feed_header">
+            <div class="d-flex justify-content-between">
+                <h5 class="p-1">
+                    <i class="fa-solid fa-chevron-left me-2 d-md-none"></i>
+                    {{profile.user.username}}
+                </h5>
+                <button type="button" class="btn d-md-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    <i class="fa-solid fa-bars fs-2 p-1"></i>
+                </button>
+            </div>
+            {% if messages %}
+                {% for message in messages  %}
+                    <div class="alert alert-success text-dark h-25 alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <!--main profile-->
+        <div class="row">
+            <!--offcanvas right-->
+            <div class="offcanvas offcanvas-end w-75" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                  <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="d-flex align-items-center  justify-content-start">
+                        <span><i class="fa-solid fa-gear fs-3 py-2 me-2"></i></span>
+                        <p class="fs-5 pt-2 ps-2">
+                            <a href="#" class="text-dark" style="text-decoration:none;">
+                                Settings and privacy
+                            </a>
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-center  justify-content-start">
+                        <span><i class="fa-regular fa-bookmark fs-3 py-3 me-2"></i></span>
+                        <p class="fs-5 pt-2 ps-2">
+                            <a href="#" class="text-dark" style="text-decoration:none;">
+                                Saved
+                            </a>
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-center  justify-content-start">
+                        <span><i class="fa-solid fa-right-from-bracket fs-3 py-2 me-2"></i></span>
+                        <p class="fs-5 pt-2 ps-2">
+                            <a href="{% url 'log-out' %}" class="text-dark" style="text-decoration:none;">
+                                Logout
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 ">
+            <div class="col-4 col-md-3 px-2">
+                <div class="profile-info">
+                    <img src="{{profile.profile_pic.url}}" alt="" class="img-fluid rounded-circle img-thumbnail " style="width:110px; height:110px; object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-2 offset-md-2 text-center mt-4">
+                <strong>{{post_count}}</strong>
+                <p class="d-block">Posts</p>
+            </div>
+            <div class="col-3 col-md-2 text-center mt-4">
+                <strong>{{profile.followings.count}}</strong>
+                <p class="d-block">Followings</p>
+            </div>
+            <div class="col-3 col-md-2 text-center pe-1 mt-4">
+                <strong>{{profile.followers.count}}</strong>
+                <p class="d-block">Followers</p>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="naming d-block">
+                <strong class="ms-2 mb-1">{{profile.user.first_name}} {{profile.user.last_name}} </strong>
+                <p class="ms-2 text-muted">@{{profile.user.username}}</p>
+            </div>
+            <div class="col-11">
+                <div class="bio mb-3">
+                    <p class="text-start">
+                        {{profile.bio}}
+                    </p>
+                </div>
+                <div class="address my-2">
+                    <i class="fa-solid fa-house-laptop"></i>
+                    <span class="ms-2">Lives in <strong class="px-1">{{profile.city}}</strong></span>
+                </div>
+                <div class="my-2">
+                    <i class="fa-solid fa-address-book"></i>
+                    <span class="ms-2">contact Detail <strong class="ps-1">{{profile.contact}}</strong></span>
+                </div>
+                <div class="my-2">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span class="ms-2">Date Joined <strong class="ps-1 fs-6">November 31, 2022</strong></span>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 justify-content-evenly">
+            <div class=" col-6 col-md-4 text-center">
+                <a href="#" class="btn btn-light w-75 p-2 border login_with">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Edit Profile
+                </a>
+            </div>
+            <div class="col-6 col-md-4">
+                {% comment %} <a href="#" class="btn btn-light w-75 p-2 border login_with data-bs-toggle="modal" data-bs-target="#createPostModal"">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Add Profile
+                </a> {% endcomment %}
+                <button type="button" id="create-btn" class="btn btn-light w-75 p-2 border" data-bs-toggle="modal" data-bs-target="#createProfileModal">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Add Profile
+                </button>
+                <!--Modal-->
+                <div class="modal fade" id="createProfileModal" tabindex="-1" aria-labelledby="createProfileModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title text-center" id="createPostModalLabel">Add Profile details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            <form action="{% url 'profile' %}" method="post" novalidate enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% for field in form %}
+                                <div class="mb-3">
+                                    {{field.label_tag}}  {{ field }}
+                                </div>
+                                {% endfor %} 
+                                <div class="bg-dark my-4 border-bottom"></div>
+                                <button type="submit" class="btn btn-primary ">Post</button>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--row with posts-->
+        <div class="row mt-5 border-top">
+            <div class="col-12">
+                <p class="py-2 fw-bold bg-light fs-6 text-center text-muted">
+                    All Posts
+                </p>
+                <!--post section-->
+                {% for post in posts  %}
+                    <div class="post my-2 border-bottom bg-light rounded">
+                        <div class="post_avatar mt-3 mt-md-2">
+                            {% if post.creator.profile.profile_pic %}
+                                <img src="{{ post.creator.profile.profile_pic.url }}" alt="Error Loading Image" class="img-fluid rounded-circle" style="width:38px;  border-radius:50%; object-fit:cover;">
+                            {% else %}
+                                <img src="{% static 'images/def-user.jpg' %}" alt="{{ post.creator.username }}">
+                            {% endif %}
+                        </div>
+                        <div class="post_body ">
+                            <div class="post_header">
+                            <div class="post_headerText  d-flex justify-content-between align-items-center">
+                                <h3 class="mt-3 mt-md-1">
+                                    {{post.creator.first_name}} {{post.creator.last_name}}
+                                    <span class="post_headerSpecial ms-2">
+                                        @{{post.creator.username}}
+                                    </span>
+                                    <div><span class="text-muted fs-sm d-md-none" style="font-size:0.7rem;">{{post.date_created}}</span></div>              
+                                </h3>
+                                <div class="me-md-1 d-flex">
+                                    <span id="date" class="me-md-3 mt-md-2 text-muted fs-sm d-none d-lg-block" style="font-size:smaller;">{{post.date_created}}</span>
+                                    <div class="dropdown">
+                                        <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis fs-6 text-muted"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'update-post' post_id=post.id %}">
+                                                <i class="fa-regular fa-pen-to-square me-2"></i>
+                                                Edit Post
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <form action="{% url 'delete-post' post_id=post.id %}" method="post">
+                                                {% csrf_token %}
+                                                <div class="d-inline bg-light">
+                                                    <i class="fa-solid fa-trash-can px-2 ms-2"></i>
+                                                    <input type="submit" value="Delete Post" class="btn btn-light btn-sm">
+                                                </div>
+                                            </form>
+                                        </li>
+                                        </ul>
+                                    </div>                                                                
+                                </div>
+                            </div>
+                            <div class="post_headerDescription mt-md-3 mt-2 ms-2 ">
+                                <p>{{post.content_text}}</p>
+                            </div>
+                            </div>
+
+                            <!--post content section-->
+                            <div class="pe-md-4">
+                                {% if post.content_image %}
+                                <a href="{{post.content_image.url}}">
+                                    <img src="{{post.content_image.url}}" alt="post.content_image" class="img-fluid">
+                                </a>
+                                {% elif post.content_file %}
+                                <p>Size: {{ post.content_file.size|filesizeformat }}</p>
+                                <div class="post-file py-3 px-2 d-flex align-items-center">
+                                    <img src="{% static 'images/doc.png' %}" class="img-fluid me-1" style="width:30px; height:30px;">
+                                    <a href="{{ MEDIA_URL }}{{ post.content_file.url }}" download title="{{ post.content_file.name }}" class="file-link">
+                                    {{ post.content_file.name|truncatechars:35 }}
+                                    </a>
+                                </div>                    
+                                {% endif %}
+                            </div>
+
+                            <!--post footer section-->
+                            <div class="post_footer mt-4   d-flex justify-content-around">
+                                <!--Like post-->
+                                {% if request.user in post.likers.all %}
+                                  <div class="like d-inline">
+                                    <span class="text-muted" style="font-size:0.9rem;">{{post.likers.count}}</span>
+                                    <a href="{% url 'like-post' post_id=post.id %}" class="text-dark" style="text-decoration:none;">
+                                      <i class="fa-solid fa-heart" style="color: #fb0404;"></i>
+                                    </a>
+                                  </div>
+                                {% else %}
+                                  <div class="like d-inline">
+                                    <span class="text-muted" style="font-size:0.9rem;">{{post.likers.count}}</span>
+                                    <a href="{% url 'like-post' post_id=post.id %}" class="text-dark" style="text-decoration:none;">
+                                      <i class="fa-regular fa-heart text-danger"></i>
+                                    </a>
+                                  </div>
+                                {% endif %}
+                                
+                                <!--comment post-->
+                                <a href="{% url 'add-comment' post_id=post.id %}">
+                                  <span class="text-dark">{{post.comments.count}}</span>
+                                  <i class="fa-regular fa-comment"></i>
+                                </a>
+                
+                                <!--save post-->
+                                {% if request.user in post.savers.all %}
+                                  <a href="{% url 'save-post' post_id=post.id %}" class="text-dark" style="text-decoration:none;">
+                                    <i class="fa-solid fa-bookmark" style="color: #f98006;"></i>
+                                  </a>
+                                {% else %}
+                                  <a href="{% url 'save-post' post_id=post.id %}" class="text-dark" style="text-decoration:none;">
+                                    <i class="fa-regular fa-bookmark" style="color: #ff8000;"></i>
+                                  </a>               
+                                {% endif %}
+                            </div>                                
+                        </div>
+                    </div>     
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-12">
+                <!--for paginator/footer-->
+                <div class="footer" style="height:30px;">
+                </div>
+            </div>
+        </div> 
+    </div> 
+
+
+{% endblock main %}

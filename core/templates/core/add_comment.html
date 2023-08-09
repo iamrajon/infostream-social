@@ -1,0 +1,137 @@
+{% extends 'core/base2.html' %}
+
+{% load static %}
+
+{% block title %} Comment-On-Post | Infostream {% endblock title %}   
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 border-end border-start">
+            <div class="mb-1 border-bottom d-flex justify-content-start align-items-center bg-light">
+                <a href="{% url 'index' %}" class="text-dark">
+                    <i class="fa-sharp fa-solid fa-arrow-left me-4 fs-5"></i>
+                </a>
+                <p class="fw-900 ms-5 mt-2 text-dark">{{post.creator}}'s Post</p>
+            </div> 
+            {% if post %}
+                <div class="post mt-2 mb-2  border rounded bg-light">
+                    <div class="post_avatar">
+                    {% if post.creator.profile.profile_pic %}
+                        <img src="{{ post.creator.profile.profile_pic.url }}" alt="Error Loading Image" class="img-fluid rounded-circle" style="width:38px; height:38px; object-fit:cover;">
+                    {% else %}
+                        <img src="{% static 'images/def-user.jpg' %}" alt="{{ post.creator.username }}">
+                    {% endif %}
+                    </div>
+                    <div class="post_body me-2">
+                        <div class="post_header">
+                            <div class="post_headerText  d-flex justify-content-between align-items-center">
+                            <h3 class="mt-1">
+                                <a href="{% url 'user-profile' user_id=post.creator.id %}" class="text-dark" style="text-decoration:none;">
+                                {{post.creator.first_name}} {{post.creator.last_name}}
+                                </a>
+                                <span class="post_headerSpecial ms-2">
+                                @{{post.creator.username}}
+                                </span>
+                                <div><span class="text-muted fs-sm d-md-none" style="font-size:0.7rem;">{{post.date_created}}</span></div>              
+                            </h3>
+                            <div class="me-md-1 d-flex">
+                                <span id="date" class="me-md-3 mt-md-2 text-muted fs-sm d-none d-lg-block" style="font-size:smaller;">{{post.date_created}}</span>
+                                <div class="dropdown">
+                                    <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis fs-6 text-muted"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="#">Report</a></li>
+                                        <li><a class="dropdown-item" href="#">Share</a></li>
+                                    </ul>
+                                </div>                                                                
+                            </div>
+                            </div>  
+                            <div class="post_headerDescription mt-2">
+                            <p>{{post.content_text}}</p>
+                            </div>
+                        </div>
+                        <!--content of post-->
+                        <div class="pe-md-4">
+                            {% if post.content_image %}
+                                <a href="{{post.content_image.url}}">
+                                <img src="{{post.content_image.url}}" alt="post.content_image" class="img-fluid">
+                                </a>
+                            {% elif post.content_file %}
+                                <p>Size: {{ post.content_file.size|filesizeformat }}</p>
+                                <div class="post-file py-3 px-2 d-flex align-items-center">
+                                    <img src="{% static 'images/doc.png' %}" class="img-fluid me-1" style="width:30px; height:30px;">
+                                    <a href="{{ MEDIA_URL }}{{ post.content_file.url }}" download download title="{{ post.content_file.name }}" class="file-link">
+                                        {{ post.content_file.name|truncatechars:35 }}
+                                    </a>
+                                </div>                    
+                            {% endif %}
+                        </div>     
+
+                        <div class="post_footer mt-4   d-flex justify-content-around">
+                            <!--Like post-->
+                            {% if request.user in post.likers.all %}
+                                <div class="like d-inline">
+                                    <span class="text-muted" style="font-size:0.9rem;">{{post.likers.count}}</span>
+                                    <a href="{% url 'like-post' post_id=post.id %}" class="text-dark" style="text-decoration:none;">
+                                    <i class="fa-solid fa-heart" style="color: #fb0404;"></i>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="like d-inline">
+                                    <span class="text-muted" style="font-size:0.9rem;">{{post.likers.count}}</span>
+                                    <a href="{% url 'like-post' post_id=post.id %}" class="text-dark" style="text-decoration:none;">
+                                    <i class="fa-regular fa-heart text-danger"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
+                            
+                            <!--comment post-->
+                            <a href="{% url 'add-comment' post_id=post.id %}">
+                            <span class="text-dark">{{post.comments.count}}</span>
+                            <i class="fa-regular fa-comment"></i>
+                            </a>
+
+                            <!--save post-->
+                            {% if request.user in post.savers.all %}
+                                <a href="{% url 'save-post' post_id=post.id %}" class="text-dark" style="text-decoration:none;">
+                                    <i class="fa-solid fa-bookmark" style="color: #f98006;"></i>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'save-post' post_id=post.id %}" class="text-dark" style="text-decoration:none;">
+                                    <i class="fa-regular fa-bookmark" style="color: #ff8000;"></i>
+                                </a>               
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!--form for comment-->
+                <div class="commentbox">
+                    <form action="{% url 'add-comment' post_id=post.id %}" method="post" class="">
+                        {% csrf_token %}
+                        <div class="me-3">
+                            {{form.as_p}}
+                            <input type="submit" class="btn btn-primary btn-sm" value="comment">
+                        </div>
+                    </form>
+                </div>     
+            {% endif %}
+            <!--list of comments-->
+            <div class="comments-list mt-3 border-top">
+                {% for comment in comments %}
+                    <div class="mt-2 d-flex justify-content-start ">
+                        <img src="{{ comment.commenter.profile.profile_pic.url }}" alt="Profile Picture" class="img-fluid rounded-circle img-thumbnail " style="width: 50px; height: 50px; object-fit:cover;">
+                        <div class="d-block mt-1 ms-2" style="border-radius:10px; background-color:#f2f2f2;">
+                            <span class="fw-bolder text-dark mx-3 " style="font-size:0.9rem;">{{comment.commenter.first_name}} {{comment.commenter.last_name}}</span>
+                            <p class="mx-3 " style="font-size:1rem;">{{comment.comment_text}}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

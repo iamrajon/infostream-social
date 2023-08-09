@@ -1,0 +1,60 @@
+{% extends 'core/base2.html' %}
+{% load static %}
+
+{% block title %} Search User | Infostream {% endblock title %}  
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row nav-row">
+        {% include 'core/bottomnav.html' %}       
+    </div>
+    <div class="row search-bar">
+        <div class="col-12 py-2"> 
+            <form class="search-bar" action="{% url 'search' %}" method="GET">                
+                <div class="widgets d-flex justfy-content-between" style="margin-top:0;">
+                    <i class="fa-solid fa-chevron-left mt-4 fs-3"></i>
+                    <div class="widgets_input">
+                        <i class="fa-solid fa-magnifying-glass me-2"></i>
+                        <input type="text" placeholder="Search" name="username">
+                    </div>
+                    <input type="submit" value="Search" class="btn btn-light btn-sm text-danger fw-bolder p-3">
+                </div>
+            </form>                      
+        </div>
+    </div>
+    <div class="row search-results mt-3">
+        <div class="col-12">
+            {% if profiles %}
+                <span class=" mt-2 mb-4 fw-400">Search Results</span>
+                {% for profile in profiles  %} 
+                    <div class="row mb-2" style="height: 60px;">
+                        <div class="col-8 p-2 d-flex align-items-center">
+                            <img src="{{ profile.profile_pic.url }}" alt="Profile Picture" class="rounded-circle img-thumbnail" style="width: 50px; height: 50px; object-fit:cover;">
+                            <div class="ms-2 mt-2 d-flex flex-column" style="margin:0; padding:0;">
+                                <div class="mb-0">
+                                    <a href="{% url 'search-profile' profile_id=profile.id %}" class="text-dark" style="text-decoration:none;">
+                                        <strong>{{profile.user.first_name}} {{profile.user.last_name}}</strong>
+                                    </a>
+                                </div>
+                                <div class="mt-0">@{{profile.user.username}}</div>
+                            </div>          
+                        </div>
+                        <div class="col-4 p-2 align-items-center d-flex">
+                            <button type="button" class="btn btn-outline-primary rounded-pill mt-2" style="width: 87px; height: 38px;">Follow</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% if search %}
+                    <p class="text-center fw-400">
+                        Search result doesnot found!
+                    </p>               
+                {% endif %}                
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

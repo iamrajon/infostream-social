@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Login Page | Infostream  {% endblock title %}   
+
+{% block content %}
+
+<!--main section-->
+<div class="container-fluid" style="height:90vh;  background:#f0f2f5;">
+    <div class="row justify-content-evenly align-items-center border-primary">
+        <div class="col-md-5 p-4 p-lg-2 text-center">
+            <img src="{% static 'images/icon.png' %}" class="img-fluid mb-4" alt="logo" style="width:110px;">
+            <h1 class="text-primary fw-bold fs-1" style="font-size:4rem;">InfoStream</h1>
+            <p class="fs-5">A platform to share ideas, thoughts and social life related stuffs! </p>
+        </div>
+        <div class=" col-md-5 text-start p-md-5 mt-3 mt-lg-5">
+            <div class="card bg-white rounnded-4 " style="border-radius:20px;">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Login</h3>
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                          {% for error in form.non_field_errors  %}
+                            <div>
+                              <p style = "color:red; border:2px solid red; padding:10px; font-size:14px;">{{error}}</p>   
+                            </div>              
+                          {% endfor %}
+                        {% endif %}
+                                         
+                        {% for fm in form  %}
+                          <div class="mt-3 form-group">
+                           {{fm.label_tag}} {{fm}}
+                           <span style="color:red;">{{fm.errors | striptags }}</span>
+                          </div>
+                        {% endfor %}
+                        <div class="d-grid gap-2 px-2 my-4 mx-auto">
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                          </div> 
+                        {% comment %} <div class="form-group text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        </div> {% endcomment %}
+                    </form>
+                    <p class="text-center mt-1">Don't have an Account?</p>
+                    <div class="border-bottom "></div>
+                    <div class="d-grid gap-2 col-6 mx-auto my-3">
+                        <a href="{% url 'sign-up' %}" class="submit btn btn-outline-success text-dark ">Create New Account</a>
+                      </div>
+                </div>
+              </div>           
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<footer class="bg-light text-dark py-2">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-md-start text-center mb-3 mb-md-0">
+          <p>&copy; 2023 InfoStream   All rights reserved</p>
+        </div>
+        <div class="col-md-6 text-md-end text-center">
+          <a href="#" class="text-dark"><i class="fab fa-facebook-f fa-md mx-3"></i></a>
+          <a href="#" class="text-dark"><i class="fab fa-twitter fa-md mx-3"></i></a>
+          <a href="#" class="text-dark"><i class="fab fa-instagram fa-md mx-3"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+
+{% endblock content %}
+

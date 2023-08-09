@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+
+.form-control:focus{
+    box-shadow: 0 0 0 0.1rem rgba(38, 115, 215, 0.25);
+    border-color: rgb(72, 108, 193);
+}
+
+.btn, .btn:focus, .btn:active{
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+ }
+
+ 
+.signup_btn:hover{
+    background-color: #ccd4e0 !important;
+    color: black;
+}

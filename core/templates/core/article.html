@@ -1,0 +1,111 @@
+{% extends 'core/index.html' %}
+{% load static %}
+
+{% block title %} Articles | Infostream {% endblock title %}  
+
+{% block main %}
+
+<!--Bootom Nav-->
+{% include "core/bottomnav.html" %}
+
+  <div class="col-sm-12 col-md-9 col-lg-6 main_bar border-end">
+    <div class="container-fluid bg-light border-bottom feed_header" style="">
+        <h2 class="d-none d-md-block">Home</h2>
+        <div class="d-flex justify-content-between align-items-center my-1 p-2" style="font-family: 'Lobster', cursive;">
+          <span class="d-md-none fw-bolder fs-5 text-primary">InfoStream</span>
+          <img src="{{user_profile.profile_pic.url}}" alt="profile-pic" class="img-fluid rounded-circle d-md-none" style="width:24px; height:24px; object-fit:cover;">
+        </div>
+        <div class="container-fluid d-flex justify-content-evenly align-items-center">
+          <div class="col-6 bg-light text-center border-end">
+            <a href="{% url 'index' %}" class="btn btn-light btn-sm fw-bold">Posts</a>
+          </div>
+          <div class="col-6 bg-light text-center border-start d-block">
+            <a href="{% url 'articles' %}" class="btn btn-light btn-sm fw-bold">Articles</a>
+            <div class="bg-primary rounded" style="padding:0.1rem;"></div>
+          </div>
+        </div>     
+        <span>
+            <!----toast-->
+          {% if messages %}
+            {% for message in messages  %}
+              {% if message.level_tag == 'success' %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <span>{{message}}</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div> 
+              {% endif %}
+              {% if message.level_tag == 'error' %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <span>{{message}}</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div> 
+              {% endif %}                 
+            {% endfor %}
+          {% endif %}
+          <!---toast ends -->
+        </span>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="fw-800 fs-6 text-muted p-2 mt-2">Lets Create A community to share Information on your desired tipics.</p>
+                <a href="{% url 'create-article' %}" class="btn btn-outline-secondary btn-sm">
+                    <i class="fa-solid fa-plus"></i>
+                    Create Article
+                </a>
+            </div>
+        </div>
+        <!--row for displaying articles-->
+        <div class="row mt-3">
+          <div class="col">
+            {% for post in posts  %}
+              <div class="mt-5 rounded">
+                <div class="top-fixed mb-2 p-3 border-bottom d-flex " style="background-color:#f2f2f2; font-size:0.9rem;">
+                  <span class="fw-bold ps-1" style="font-size:1.3rem; color:	#4d99b3;">{{post.title}}</span>
+                  <div class="dropdown ms-auto">
+                    <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-ellipsis fs-6 text-muted"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li>
+                        <a class="dropdown-item" href="{% url 'delete-article' del_article_id=post.id %}">
+                          <i class="fa-solid fa-trash-can px-2 "></i>
+                          Delete
+                        </a>
+                      </li>
+                    </ul>
+                </div> 
+                </div>
+                <div class="px-2 d-block" style="font-size:0.9rem;">
+                  <div class="content">
+                    {{ post.content | truncatewords:100 | safe }}
+                  </div>
+                  <div class="button ms-2">
+                    <a href="{% url 'detail-article' article_id=post.id %}" class=" btn btn-outline-info text-dark  ms-auto">Read More...</a>
+                  </div>
+                  <span>Created by: {{post.art_maker.first_name}}</span>
+                </div>
+                {% comment %} <div class="bottom-fixed p-2 border mt-2 d-flex justify-content-between" style="background-color:#f2f2f2; font-size:0.7rem;">
+                  <div class="fw-500 ps-1">Creator: <strong>{{post.art_maker.first_name}} {{post.art_maker.last_name}}</strong></div>
+                  <div class="fw-500 ps-1 ms-5">Category: <strong>{{post.category}}</strong> </div>
+                  <div class="fw-500 ps-1 ms-5">Published on: <strong>{{post.date_created}}</strong></div>
+                </div> {% endcomment %}
+              </div>             
+            {% endfor %}
+          </div>
+        </div>
+        <!--row for pagination-->
+        <div class="row">
+          <div class="col-12 p-5">
+
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+
+{% endblock main %}
+

@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,500;0,700;1,500;1,700&family=Lobster&display=swap');
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+    --infostream-color: #50b7f5;
+    --infostream-background: #e6ecf0;
+}
+
+a{
+  text-decoration: none;
+}
+
+.form-control:focus{
+  box-shadow: 0 0 0 0.1rem rgba(38, 115, 215, 0.25);
+  border-color: rgb(72, 108, 193);
+}
+
+.btn, .btn:focus, .btn:active{
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+ }
+ 
+.btn, .btn:focus, .btn:active{
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+.title{
+    font-family: 'Lobster', cursive;
+    color: rgb(68, 76, 190);
+}
+
+.left_sidebar{
+  position: sticky;
+  top: 0px;
+  height: fit-content;
+} 
+
+div.right_side_bar{
+  position: fixed;
+  right: 10px;
+  top: 10px;
+}
+
+.list-item{
+    font-family: 'Alegreya Sans', sans-serif;
+    cursor: pointer;
+    width: 220px;
+    font-size: 30px;
+}
+
+.list-item:hover{
+    background-color: var(--infostream-background);
+    border-radius: 30px;
+    color: var(--infostream-color)
+}
+
+.sidebar_create{
+    width: 60%;
+    background-color: var(--infostream-color);
+    border:none;
+    color: white;
+    font-weight: 900;
+    border-radius: 30px;
+    height: 50px;
+    margin-top: 20px;
+  }
+.sidebar_create:hover{
+    background-color: #3c87b6;
+  }
+
+  
+.feed_header{
+    position: sticky;
+    top: 0;
+    background-color: white;
+    border: 1px solid var(--infostream-background);
+    padding: 10px 10px;
+  }
+  .feed_header h2{
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  
+/* creat box  */
+.createbox_input img{
+    border-radius: 50%;
+    height: 40px;  
+  }
+  
+  .createBox{
+    padding-bottom: 10px;
+    border-bottom: 8px solid var(--infostream-background);
+    padding-right: 10px;
+  }
+  
+  .createBox form{
+    display: flex;
+    flex-direction: column;
+  
+  }
+  .createbox_input{
+    display: flex;
+    padding: 20px;
+  }
+  .createbox_input input{
+    flex: 1;
+    margin-left: 20px;
+    font-size: 15px;
+    border: none;
+    outline: none;
+  }
+
+  
+/* post  */
+.post_avatar img{
+    border-radius: 50%;
+    height: 40px;
+  }
+  .post{
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--twitter-background);
+    padding-bottom: 10px;
+  
+  }
+  .post_body img{
+    width: 600px;
+    object-fit: contain;
+    border-radius: 20px;
+  }
+  .post_footer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  
+  }
+  .post_badge{
+    font-size: 14px !important;
+    color: var(--twitter-color) !important;
+    margin-right: 5px;
+  }
+  
+  /* additional  */
+  .post_headerText {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .post_headerText #date {
+    font-size: 0.7rem;
+    color: gray;
+  }
+  /* additionall ends  */
+  
+  .post_headerSpecial{
+    font-weight: 600;
+    font-size: 15px;
+    color: gray;
+  }
+  .post_headerText h3 {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+  .post_headerDescription{
+    margin-bottom: 10px;
+    font-size: 15px; 
+  }
+  
+  .post_body{
+    flex: 1;
+    padding: 10px;
+  
+  }
+  .post_avatar{
+    padding: 5px;
+    margin-top: 7px;
+  }
+
+  .post-file {
+    margin-bottom: 5px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+
+  }
+  .file-link {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } 
+  .post-file a {
+    display: block;
+    padding: 2px;
+    color: #303030;
+    text-decoration: none;
+    border-radius: 3px;
+  }
+
+  /*widgets*/
+.widgets{
+    /* border-left:  1px solid var(--infostream-background); */
+    flex: 0.2;
+    min-width: 350px;
+    margin-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+  
+.widgets_input{
+  display: flex;
+  align-items: center;
+  background-color: var(--infostream-background);
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+  min-width: 270px;
+  width: 350px;
+}
+
+.widgets_input input{
+  border: none;
+  background-color: var(--infostream-background);
+  outline: none;
+}
+
+.search_icon{
+  color: gray;
+}
+.widgets_container{
+  width: 350px;
+  margin-top: 15px;
+  margin-left: 10px;
+  padding: 10px;
+  background-color: #f5f8fa;
+  border-radius: 20px;
+}
+
